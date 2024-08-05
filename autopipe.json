@@ -1,0 +1,31 @@
+{
+  "pipelines": [
+    {
+      "pipelineName": "rej_func_cypress_main",
+      "processScript": "cypress.csql",
+      "sendToSubscriptions": true,
+      "saveToCds": true,
+      "saveToRealtime": true,
+      "outputDataModelName": "dmsqlcypress",
+      "useBatchNotification": true,
+      "saveToUnified": true,
+      "cronExpressions": [
+        "0 0 0 1 1 ? 2099"
+      ],
+      "overlapDeltaMinutes": 30,
+      "sourceEntities": {
+        "dataModels": [
+          {
+            "dataModelName": "dmsqlcypress"
+          }
+        ],
+        "stagings": [
+          {
+            "connectorName": "sql",
+            "stagingName": "cypresstable"
+          }
+        ]
+      }
+    }
+  ]
+}

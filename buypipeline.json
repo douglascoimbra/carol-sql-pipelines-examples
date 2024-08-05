@@ -1,0 +1,34 @@
+{
+  "pipelines": [
+    {
+      "pipelineName": "two_stagings_main",
+      "processScript": "mdmcompra.csql",
+      "sendToSubscriptions": true,
+      "saveToCds": true,
+      "outputDataModelName": "mdmpurchaseorder",
+      "timeZone": "America/Sao_Paulo",
+      "saveToUnified": true,
+      "cronExpressions": [
+        "0 */02 * * * ?"
+      ],
+      "overlapDeltaMinutes": 30,
+      "sourceEntities": {
+        "dataModels": [
+          {
+            "dataModelName": "mdmpurchaseorder"
+          }
+        ],
+        "stagings": [
+          {
+            "connectorName": "nlp",
+            "stagingName": "purchaseorder"
+          },
+          {
+            "connectorName": "nlp",
+            "stagingName": "product"
+          }
+        ]
+      }
+    }
+  ]
+}
