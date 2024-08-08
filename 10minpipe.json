@@ -1,0 +1,37 @@
+{
+    "defaults": {
+      "cronExpressions": [
+        "0 */5 0 ? * * *"
+      ],
+      "prepareScripts": [
+        "prepare.sql"
+      ]
+    },
+    "pipelines": [
+      {
+        "pipelineName": "product_main",
+        "pipelineDescription": "Pipeline for the product table, that uses nlp_product",
+        "outputDataModelName": "mdmproduct",
+        "overlapDeltaMinutes": 180,
+        "saveToCds": true,
+        "saveToUnified": true,
+        "sendToSubscriptions": true,
+        "cronExpressions": [
+          "0 5,15,25,35,45,55 * * * ?"
+        ],
+        "timeZone": "America/Sao_Paulo",
+        "prepareScripts": [
+          "product_prepare.sql"
+        ],
+        "processScript": "product.sql",
+        "sourceEntities": {
+          "stagings": [
+            {
+              "connectorName": "nlp",
+              "stagingName": "product"
+            }
+          ]
+        }
+      }
+    ]
+  }

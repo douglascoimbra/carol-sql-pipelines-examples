@@ -1,0 +1,33 @@
+WITH product AS (
+    SELECT
+        id AS mdmname,
+        productname AS mdmdescription,
+        productprice AS mdmunitvalue,
+        image AS mdmimage,
+        true AS __resolveGeolocation,
+        category AS mdmcategoryname,
+        ARRAY(
+        SELECT AS STRUCT
+            (JSON_VALUE(address, '$[0].addresstype')) AS mdmaddresstype,
+            (JSON_VALUE(address, '$[0].addresscoordinates')) AS mdmcoordinates,
+            (JSON_VALUE(address, '$[0].address1')) AS mdmaddress1,
+            (JSON_VALUE(address, '$[0].address2')) AS mdmaddress2,
+            (JSON_VALUE(address, '$[0].address3')) AS mdmaddress3,
+            (JSON_VALUE(address, '$[0].zipcode')) AS mdmzipcode,
+            (JSON_VALUE(address, '$[0].city')) AS mdmcity,
+            (JSON_VALUE(address, '$[0].state')) AS mdmstate,
+            (JSON_VALUE(address, '$[0].country')) AS mdmcountry  
+        )  as mdmaddress,
+        searchplace AS homeplace
+        --metadata--
+    FROM
+        stg_nlp_product as stg
+    WHERE
+        1 = 1
+        --timestamp-- OR mdmCounterForEntity > {{start_from}}
+)
+
+SELECT
+    *
+FROM
+    product

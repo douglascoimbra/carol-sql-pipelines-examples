@@ -1,0 +1,33 @@
+WITH product AS (
+    SELECT
+        id AS mdmname,
+        productname AS mdmdescription,
+        productprice AS mdmunitvalue,
+        image AS mdmimage,
+        true AS __resolveGeolocation,
+        category AS mdmcategoryname,
+        birthdate AS mdmregisterdate,
+        ARRAY(
+        SELECT AS STRUCT
+            (address[SAFE_ORDINAL(1)].addresstype) AS mdmaddresstype,
+            (address[SAFE_ORDINAL(1)].addresscoordinates) AS mdmcoordinates,
+            (address[SAFE_ORDINAL(1)].address1) AS mdmaddress1,
+            (address[SAFE_ORDINAL(1)].address2) AS mdmaddress2,
+            (address[SAFE_ORDINAL(1)].address3) AS mdmaddress3,
+            (address[SAFE_ORDINAL(1)].zipcode) AS mdmzipcode,
+            (address[SAFE_ORDINAL(1)].city) AS mdmcity,
+            (address[SAFE_ORDINAL(1)].state) AS mdmstate,
+            (address[SAFE_ORDINAL(1)].country) AS mdmcountry
+        )  as mdmaddress,
+        searchplace AS houseplace
+        --metadata--
+    FROM
+        stg_nlp_emitente_1 as stg
+    WHERE
+        1 = 1
+        --timestamp-- OR mdmCounterForEntity > {{start_from}}
+)
+SELECT
+    *
+FROM
+    product
