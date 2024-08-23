@@ -100,7 +100,7 @@
           },
           {
             "connectorName": "nlp",
-            "stagingName": "product"
+            "stagingName": "douglas"
           }
         ]
       }
